@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from web3 import Web3
 import json
-import requests
 from decimal import Decimal
 
 app = FastAPI()
@@ -28,7 +27,6 @@ fibo_abi = json.load(f)
 
 @app.get("/")
 async def root():
-    token_balance = {}
     contract_address = Web3.toChecksumAddress("0xF892561596B7b8085fAd1b03b902D00096AE31aD")
 
     contract = w3.eth.contract(address=contract_address, abi=fibo_abi)
@@ -42,9 +40,9 @@ async def root():
         amount_balance = convert_to_ether(balance)
         add_values += amount_balance
 
-    token_balance.update({"calculate": main_total - add_values})
+    calculate = main_total - add_values
 
-    return token_balance['calculate']
+    return calculate
 
 
 @app.get('/total')
@@ -57,5 +55,5 @@ def total_supply():
 
 
 def convert_to_ether(amount):
-    d_amount = Decimal(amount) * (Decimal(10) ** 14)
+    d_amount = Decimal(amount) * (Decimal(10) ** 18)
     return w3.fromWei(d_amount, 'ether')
