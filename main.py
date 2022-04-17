@@ -25,6 +25,7 @@ w3 = Web3(Web3.HTTPProvider(bsc_rpc))
 f = open('fibo.json')
 fibo_abi = json.load(f)
 
+
 @app.get("/")
 async def root():
     token_balance = {}
