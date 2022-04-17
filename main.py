@@ -44,7 +44,7 @@ async def root():
 
     token_balance.update({"calculate": main_total - add_values})
 
-    return token_balance
+    return token_balance['calculate']
 
 
 @app.get('/total')
@@ -53,7 +53,7 @@ def total_supply():
     contract = w3.eth.contract(address=contract_address, abi=fibo_abi)
     totalSupply = contract.functions.totalSupply().call()
     main_total = convert_to_ether(totalSupply)
-    return {"totalSupply": main_total}
+    return main_total
 
 
 def convert_to_ether(amount):
